@@ -3,33 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" type="text/css" href="./assets/css/style.css">
+    <title>Beer is Poetic</title>
 </head>
+
 <body>
-    <header>
-        <h1>Beer is Poetic</h1>
+    <!-- Header Section -->
+    <header class="headerBox">
+        <p>Beer is Poetic</p>
     </header>
 
-    <main>
-        <div>
-            <input id="location-input" type="text" placeholder="Hilo"/>
-            <button id="location-btn">Search</button>
+    <!-- Main Content -->
+    <main style="display: flex;">
+        <!-- Left Container -->
+        <div id="leftContainer" style="flex: 65%;">
+
+            <section id="searchBrew" class="borderBox" style="flex: 20%;">
+                <input id="location-input" type="text" placeholder="Hilo"/>
+                <button id="location-btn">Search</button>
+            </section>
+
+            <section id="resultBrew" class="borderBox" style="flex: 80%;">
+                <ul id="brewery-list"></ul>
+            </section>
+
         </div>
-        <div>
-            <ul id="brewery-list"></ul>
+
+        <!-- Right Container -->
+        <div id="rightContainer" style="flex: 35%;">
+
+            <section id="poem-snippet" class="borderBox" style="flex: 50%;">
+                
+            </section>
+
+            <section id="satBrew" class="borderBox" style="flex: 50%;">
+                <image id="sat-image" width="300" height="300" alt="satellite image of brewery location" src=""></image>
+            </section>
+
         </div>
-        <image id="sat-image" width="300" height="300" alt="satellite image of brewery location" src=""></image>
-        <div id="poem-snippet"></div>
     </main>
-
 </body>
-
-  <!-- Scripts -->
-  <script
+<script
     src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
     integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
     crossorigin="anonymous"
-    referrerpolicy="no-referrer"
-  ></script>
-  <script src="./assets/js/index.js"></script>
+    referrerpolicy="no-referrer">
+</script>
+
+<script src="./assets/js/index.js"></script>
 </html>
