@@ -217,10 +217,15 @@ Handles the search request when the search button is clicked
 === handleSearch ===*/
 function handleSearch() {
   var cityName = $("#location-input").val();
+  localStorage.setItem("breweryLocation", cityName);
   getBreweryApi(cityName);
 }
 
 /* === MAIN ===
 Sets up the search button listener
 === MAIN ===*/
+var cityName = localStorage.getItem("breweryLocation");
+if (!!cityName) {
+  getBreweryApi(cityName);
+}
 searchButton.on("click", handleSearch);
