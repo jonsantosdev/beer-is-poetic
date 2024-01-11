@@ -30,7 +30,6 @@ function updateBreweries(breweryData) {
   var phoneNum;
   var breweryText;
 
-  console.log(breweryData);
   // clear out the old list
   ulEl.empty();
   // fill in with the new
@@ -63,7 +62,7 @@ function updateBreweries(breweryData) {
 Simple implementation (needs love)
 Finds the line in the poem that mentions beer and them updates HTML with stanza
 === updatePoem ===*/
-function updatePoem(poemData) {
+function updatePoem(poemData, searchTerm) {
   var poemEl = $("#poem-snippet");
   var pEl;
   var lines = poemData[0].lines;
@@ -82,7 +81,7 @@ function updatePoem(poemData) {
       if (lines[i] === "") {
         startIndex = i;
       }
-      if (lines[i].includes("beer")) {
+      if (lines[i].includes(searchTerm)) {
         beerIndex = i;
         break;
       }
@@ -116,6 +115,12 @@ function updatePoem(poemData) {
   }
   // empty the poem element
   poemEl.empty();
+
+  // add the author
+  pEl = $("<h3>");
+  pEl.text(`${poemData[0].title}`);
+  poemEl.append(pEl);
+
   // add the poetry lines to the poem element
   for (let i = startIndex; i <= endIndex; i++) {
     pEl = $("<p>");
@@ -131,18 +136,29 @@ function updatePoem(poemData) {
 /* === getPoem ===
 Fetches a random poem that mentions "beer" from poetrydb.org
 === getPoem ===*/
-function getPoem() {
-  var currentApi = "https://poetrydb.org/random,lines/1;beer";
+async function getPoem() {
+  var searchTerm;
+  var num;
+  var currentApi;
+  var poemData;
+  var poem;
 
-  fetch(currentApi)
-    .then(function (response) {
-      if (!response.ok) {
-        alert("Poem not found!");
-      }
-      return response.json();
-    })
-    // once the data arrives, update the HTML
-    .then(updatePoem);
+  // randomly choose one of four search terms
+  num = Math.random();
+  if (num < 0.25) {
+    searchTerm = " ale";
+  } else if (num  < 0.5) {
+    searchTerm = "beer";
+  } else if (num < .75) {
+    searchTerm = "saloon";
+  } else {
+    searchTerm = "tavern";
+  }
+  currentApi = `https://poetrydb.org/random,lines/1;${searchTerm}`;
+
+  poemData = await fetch(currentApi);
+  poem = await poemData.json();
+  updatePoem(poem, searchTerm);
 }
 
 /* === getSatImage ===
