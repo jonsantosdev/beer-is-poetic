@@ -1,6 +1,14 @@
 
 /* apparently, styles in html tag is not stardard practice, so added body class in html
 and html class here */
+h3 {
+    font-size: 24px !important;
+    font-style: italic;
+    /* font-weight: bold !important; */
+    margin-bottom: 10px !important;
+    color:#ebbe27;
+}
+
 html {
     height: 90%; /* Ensure the HTML and body take the full viewport height */
     margin: 0; /* Remove default margin */
