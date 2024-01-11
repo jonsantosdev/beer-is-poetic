@@ -8,36 +8,35 @@
     <title>Beer is Poetic</title>
 </head>
 
-<body>
+<body class="h-[90vh] m-0 p-0">
     <!-- Header Section -->
-    <header class="headerBox">
+    <header class="headerBox w-full border-2 border-black p-2.5 text-center h-20">
         <p>Beer is Poetic</p>
     </header>
 
     <!-- Main Content -->
-    <main style="display: flex;">
+    <main class="flex">
         <!-- Left Container -->
-        <div id="leftContainer" style="flex: 65%;">
+        <div id="leftContainer" class="flex flex-col h-full" style="flex: 65%;">
 
-            <section id="searchBrew" class="borderBox" style="flex: 20%;">
+            <section id="searchBrew" class="border-2 border-black m-2.5 p-2.5" style="flex: 20%;">
                 <input id="location-input" type="text" placeholder="Hilo"/>
                 <button id="location-btn">Search</button>
             </section>
-
-            <section id="resultBrew" class="borderBox" style="flex: 80%;">
+            <section id="resultBrew" class="border-2 border-black m-2.5 p-2.5 flex-1" style="flex: 80%;">
                 <ul id="brewery-list"></ul>
             </section>
 
         </div>
 
         <!-- Right Container -->
-        <div id="rightContainer" style="flex: 35%;">
+        <div id="rightContainer" class="flex flex-col h-full" style="flex: 35%;">
 
-            <section id="poem-snippet" class="borderBox" style="flex: 50%;">
+            <section id="poem-snippet" class="border-2 border-black m-2.5 p-2.5 flex-1" style="flex: 50%;">
                 
             </section>
 
-            <section id="satBrew" class="borderBox" style="flex: 50%;">
+            <section id="satBrew" class="border-2 border-black m-2.5 p-2.5 flex-1" style="flex: 50%;">
                 <image id="sat-image" width="300" height="300" alt="satellite image of brewery location" src=""></image>
             </section>
 
