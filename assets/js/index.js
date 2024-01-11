@@ -67,6 +67,7 @@ function updatePoem(poemData, searchTerm) {
   var pEl;
   var lines = poemData[0].lines;
   var author = poemData[0].author;
+  var title = poemData[0].title;
   var startIndex;
   var beerIndex;
   var endIndex;
@@ -116,11 +117,10 @@ function updatePoem(poemData, searchTerm) {
   // empty the poem element
   poemEl.empty();
 
-  // add the author
+  // add the title
   pEl = $("<h3>");
-  pEl.text(`${poemData[0].title}`);
+  pEl.text(`${title}`);
   poemEl.append(pEl);
-
   // add the poetry lines to the poem element
   for (let i = startIndex; i <= endIndex; i++) {
     pEl = $("<p>");
