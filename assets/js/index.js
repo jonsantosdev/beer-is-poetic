@@ -11,20 +11,51 @@ function updateSatImage(satData) {
   imageEl.attr("src", satData.url);
 }
 
+/* === formatPhone ===
+Formats numbers from '1234567890' to '(123) 456-7890'
+=== formatPhone ===*/
+function formatPhone(num) {
+  var numString;
+  numString =
+    "(" + num.slice(0, 3) + ") " + num.slice(3, 6) + "-" + num.slice(6, 10);
+  return numString;
+}
+
 /* === updateBreweries ===
 Empties the brewery list and then fills with query results
 === updateBreweries ===*/
 function updateBreweries(breweryData) {
   var ulEl = $("#brewery-list");
   var lineEl;
+  var phoneNum;
+  var breweryText;
 
+  console.log(breweryData);
   // clear out the old list
   ulEl.empty();
   // fill in with the new
   for (let i = 0; i < breweryData.length; i++) {
-    lineEl = $("<li>");
-    lineEl.text(breweryData[i].name);
-    ulEl.append(lineEl);
+    // only show if brewery is open
+    if (breweryData[i].brewery_type !== "closed") {
+      // set up HTML elements for list and link
+      lineEl = $("<li>");
+      linkEl = $("<a>");
+      // add a URL if it exists
+      if (!!breweryData[i].website_url) {
+        linkEl.attr("href", breweryData[i].website_url);
+        linkEl.attr("target", "_blank");
+      }
+      // format phone number
+      phoneNum = formatPhone(breweryData[i].phone);
+      // sets up brewery info into a string
+      breweryText = `${breweryData[i].name} - `;
+      breweryText += `${breweryData[i].street}, ${breweryData[i].city}, ${breweryData[i].state} `;
+      breweryText += `${breweryData[i].postal_code} - ${phoneNum}`;
+      // appends elements
+      linkEl.text(breweryText);
+      lineEl.append(linkEl);
+      ulEl.append(lineEl);
+    }
   }
 }
 
@@ -95,7 +126,6 @@ function updatePoem(poemData) {
   pEl = $("<p>");
   pEl.text(`--${author}`);
   poemEl.append(pEl);
-
 }
 
 /* === getPoem ===
