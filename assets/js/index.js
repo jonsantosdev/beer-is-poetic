@@ -129,6 +129,7 @@ function updatePoem(poemData, searchTerm) {
   }
   // add the author
   pEl = $("<p>");
+  pEl.attr("id", "author");
   pEl.text(`--${author}`);
   poemEl.append(pEl);
 }
