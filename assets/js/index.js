@@ -11,46 +11,128 @@ function updateSatImage(satData) {
   imageEl.attr("src", satData.url);
 }
 
+/* === formatPhone ===
+Formats numbers from '1234567890' to '(123) 456-7890'
+=== formatPhone ===*/
+function formatPhone(num) {
+  var numString;
+  numString =
+    "(" + num.slice(0, 3) + ") " + num.slice(3, 6) + "-" + num.slice(6, 10);
+  return numString;
+}
+
 /* === updateBreweries ===
 Empties the brewery list and then fills with query results
 === updateBreweries ===*/
 function updateBreweries(breweryData) {
   var ulEl = $("#brewery-list");
   var lineEl;
+  var phoneNum;
+  var breweryText;
 
+  console.log(breweryData);
   // clear out the old list
   ulEl.empty();
   // fill in with the new
   for (let i = 0; i < breweryData.length; i++) {
-    lineEl = $("<li>");
-    lineEl.text(breweryData[i].name);
-    ulEl.append(lineEl);
+    // only show if brewery is open
+    if (breweryData[i].brewery_type !== "closed") {
+      // set up HTML elements for list and link
+      lineEl = $("<li>");
+      linkEl = $("<a>");
+      // add a URL if it exists
+      if (!!breweryData[i].website_url) {
+        linkEl.attr("href", breweryData[i].website_url);
+        linkEl.attr("target", "_blank");
+      }
+      // format phone number
+      phoneNum = formatPhone(breweryData[i].phone);
+      // sets up brewery info into a string
+      breweryText = `${breweryData[i].name} - `;
+      breweryText += `${breweryData[i].street}, ${breweryData[i].city}, ${breweryData[i].state} `;
+      breweryText += `${breweryData[i].postal_code} - ${phoneNum}`;
+      // appends elements
+      linkEl.text(breweryText);
+      lineEl.append(linkEl);
+      ulEl.append(lineEl);
+    }
   }
 }
 
 /* === updatePoem ===
 Simple implementation (needs love)
-Finds the line in the poem that mentions beer and them updates HTML with that line
+Finds the line in the poem that mentions beer and them updates HTML with stanza
 === updatePoem ===*/
 function updatePoem(poemData) {
   var poemEl = $("#poem-snippet");
+  var pEl;
   var lines = poemData[0].lines;
-  var beerLine;
-  
-  for (let i = 0; i < lines.length; i++) {
-    if (lines[i].includes("beer")) {
-        beerLine = lines[i];
+  var author = poemData[0].author;
+  var startIndex;
+  var beerIndex;
+  var endIndex;
+
+  // if the poem is short, include the whole thing otherwise try to find a stanza
+  if (lines.length <= 10) {
+    startIndex = 0;
+    endIndex = lines.length - 1;
+  } else {
+    // examine each line for the term "beer" and returns the line number
+    for (let i = 0; i < lines.length; i++) {
+      if (lines[i] === "") {
+        startIndex = i;
+      }
+      if (lines[i].includes("beer")) {
+        beerIndex = i;
         break;
+      }
+    }
+    // as long as "beer" has been found tries to find the end of the stanza
+    // otherwise reruns the poem fetch
+    if (!!beerIndex) {
+      for (let i = beerIndex; i < lines.length; i++) {
+        if (lines[i] === "") {
+          endIndex = i;
+          break;
+        }
+      }
+    } else {
+      console.log("Beer is missing from poem");
+      getPoem();
+      return;
+    }
+    // if start or endpoint hasn't been found or the stanza is too long
+    if (!endIndex || !startIndex || endIndex - startIndex > 10) {
+      // if beer is on an odd numbered line capture 4 lines ending in beer
+      if (beerIndex % 2 > 0) {
+        startIndex = beerIndex - 3;
+        endIndex = beerIndex;
+      } else {
+        // otherwise grab 4 lines ending with the line after beer
+        startIndex = beerIndex - 2;
+        endIndex = beerIndex + 1;
+      }
     }
   }
-  poemEl.text(beerLine);
+  // empty the poem element
+  poemEl.empty();
+  // add the poetry lines to the poem element
+  for (let i = startIndex; i <= endIndex; i++) {
+    pEl = $("<p>");
+    pEl.text(lines[i]);
+    poemEl.append(pEl);
+  }
+  // add the author
+  pEl = $("<p>");
+  pEl.text(`--${author}`);
+  poemEl.append(pEl);
 }
 
 /* === getPoem ===
 Fetches a random poem that mentions "beer" from poetrydb.org
 === getPoem ===*/
 function getPoem() {
-  var currentApi = "https://poetrydb.org/random,lines/1;beer/lines.json";
+  var currentApi = "https://poetrydb.org/random,lines/1;beer";
 
   fetch(currentApi)
     .then(function (response) {
