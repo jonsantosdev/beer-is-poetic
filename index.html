@@ -7,10 +7,11 @@
     <link rel="stylesheet" type="text/css" href="./assets/css/style.css">
     <title>Beer is Poetic</title>
 </head>
-
-<body class="h-[90vh] m-0 p-0">
+<!-- color options
+ bg-yellow-600,  -->
+<body class="h-[90vh] m-0 p-0 bg-amber-300">
     <!-- Header Section -->
-    <header class="headerBox w-full border-2 border-black p-2.5 text-center h-20">
+    <header class="bg-yellow-600 w-full border-2 border-black p-2.5 text-center h-20">
         <p>Beer is Poetic</p>
     </header>
 
@@ -19,11 +20,11 @@
         <!-- Left Container -->
         <div id="leftContainer" class="flex flex-col h-full" style="flex: 65%;">
 
-            <section id="searchBrew" class="border-2 border-black m-2.5 p-2.5" style="flex: 20%;">
+            <section id="searchBrew" class="bg-amber-100 rounded-md border  m-2.5 p-2.5" style="flex: 20%; box-shadow: 5px 5px 2px 2px #666666;">
                 <input id="location-input" type="text" placeholder="Hilo"/>
                 <button id="location-btn">Search</button>
             </section>
-            <section id="resultBrew" class="border-2 border-black m-2.5 p-2.5 flex-1" style="flex: 80%;">
+            <section id="resultBrew" class="bg-amber-100  rounded-3xl border-2 border-black m-2.5 p-2.5 flex-1" style="flex: 80%;">
                 <ul id="brewery-list"></ul>
             </section>
 
@@ -32,15 +33,16 @@
         <!-- Right Container -->
         <div id="rightContainer" class="flex flex-col h-full" style="flex: 35%;">
 
-            <section id="poem-snippet" class="border-2 border-black m-2.5 p-2.5 flex-1" style="flex: 50%;">
+            <section id="poem-snippet" class="bg-yellow-800 rounded-3xl border-2 border-black m-2.5 p-2.5 flex-1" style="flex: 50%;">
                 
             </section>
 
-            <section id="satBrew" class="border-2 border-black m-2.5 p-2.5 flex-1" style="flex: 50%;">
+            <section id="satBrew" class="bg-yellow-800 rounded-md border-2 border-black m-2.5 p-2.5 flex-1" style="flex: 50%;">
                 <image id="sat-image" width="300" height="300" alt="satellite image of brewery location" src=""></image>
             </section>
 
         </div>
+        
     </main>
 </body>
 <script
