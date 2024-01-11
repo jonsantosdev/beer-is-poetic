@@ -1,5 +1,6 @@
 const DEFAULT_CITY = "Hilo";
 var searchButton = $("#location-btn");
+var inputText = $("#location-input");
 var apiKey = "hbKzDhi94GYMB46doP1uTf3omUBWddT1aUWkFl8I"; //for NASA query
 
 /* === updateSatImage ===
@@ -214,12 +215,24 @@ function getBreweryApi(cityName) {
 }
 
 /* === handleSearch ===
-Handles the search request when the search button is clicked
+Handles the search request when enter is pressed
 === handleSearch ===*/
-function handleSearch() {
+function handleSearch(event) {
+  var cityName = $("#location-input").val();
+  // checking for the key input with ASCII code for "enter"
+  if (event.which === 13) {
+    localStorage.setItem("breweryLocation", cityName);
+    getBreweryApi(cityName);  
+  }
+}
+
+/* === handleBtnClick ===
+Handles the search request when the search button is clicked
+=== handleBtnClick ===*/
+function handleBtnClick () {
   var cityName = $("#location-input").val();
   localStorage.setItem("breweryLocation", cityName);
-  getBreweryApi(cityName);
+  getBreweryApi(cityName);  
 }
 
 /* === MAIN ===
@@ -229,4 +242,5 @@ var cityName = localStorage.getItem("breweryLocation");
 if (!!cityName) {
   getBreweryApi(cityName);
 }
-searchButton.on("click", handleSearch);
+inputText.keypress(handleSearch);
+searchButton.on("click", handleBtnClick);
