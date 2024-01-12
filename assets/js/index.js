@@ -260,7 +260,7 @@ function getBreweryApi(cityName) {
 
   // replace spaces to set up for URL
   cityString = cityName.replace(" ", "_");
-  currentApi = `https://api.openbrewerydb.org/v1/breweries?by_city=${cityString}&per_page=10`;
+  currentApi = `https://api.openbrewerydb.org/v1/breweries?by_city=${cityString}&per_page=50`;
 
   fetch(currentApi)
     .then(function (response) {
