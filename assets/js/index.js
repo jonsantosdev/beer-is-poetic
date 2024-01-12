@@ -17,9 +17,14 @@ Formats numbers from '1234567890' to '(123) 456-7890'
 === formatPhone ===*/
 function formatPhone(num) {
   var numString;
-  numString =
+  // check if num is defined before trying to parse
+  if (!num) {
+    numString = "";
+  } else {
+    numString =
     "(" + num.slice(0, 3) + ") " + num.slice(3, 6) + "-" + num.slice(6, 10);
   return numString;
+  }
 }
 
 /* === updateBreweries ===
@@ -50,7 +55,11 @@ function updateBreweries(breweryData) {
       // sets up brewery info into a string
       breweryText = `${breweryData[i].name} - `;
       breweryText += `${breweryData[i].street}, ${breweryData[i].city}, ${breweryData[i].state} `;
-      breweryText += `${breweryData[i].postal_code} - ${phoneNum}`;
+      breweryText += `${breweryData[i].postal_code}`;
+      // add phone number if it exists
+      if (!!phoneNum) {
+        breweryText += ` - ${phoneNum}`;
+      }
       // appends elements
       linkEl.text(breweryText);
       lineEl.append(linkEl);
@@ -167,8 +176,8 @@ async function getPoem() {
 Fetches the satellite image from NASA for a brewery based on its latitude and longitude.
 === getSatImage ===*/
 function getSatImage(breweryData) {
-  var lon = breweryData[0].longitude;
-  var lat = breweryData[0].latitude;
+  var lon = breweryData[4].longitude;
+  var lat = breweryData[4].latitude;
   var satelliteApi = `https://api.nasa.gov/planetary/earth/assets?lon=${lon}&lat=${lat}&date=2014-01-01&&dim=0.10&api_key=${apiKey}`;
 
   // function call to update the brewery list
