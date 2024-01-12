@@ -8,33 +8,23 @@ Adds satellite image URL to image source
 === updateSatImage ===*/
 function updateSatImage(satData) {
   var imageEl = $("#sat-image");
-
+  
   imageEl.attr("src", satData.url);
-}
-
-/* === formatPhone ===
-Formats numbers from '1234567890' to '(123) 456-7890'
-=== formatPhone ===*/
-function formatPhone(num) {
-  var numString;
-  // check if num is defined before trying to parse
-  if (!num) {
-    numString = "";
-  } else {
-    numString =
-    "(" + num.slice(0, 3) + ") " + num.slice(3, 6) + "-" + num.slice(6, 10);
-  return numString;
-  }
 }
 
 /* === updateBreweries ===
 Empties the brewery list and then fills with query results
 === updateBreweries ===*/
 function updateBreweries(breweryData) {
-  var ulEl = $("#brewery-list");
-  var lineEl;
-  var phoneNum;
-  var breweryText;
+  var ulEl = $("#brewery-list");  // unordered list used to list brewery info
+  var lineEl;       // line element for unordered list
+  var headerEl;     // brewery header element
+  var pEl;          // paragraph element displays address and holds buttons/links
+  var breweryText;  // brewery address
+  var satBtnEl;     // satellite update button
+  var phoneBtnEl;   // call phone button
+  var urlBtnEl;     // brewery website button
+  var anchorEl;     // anchor element used for URL and phone
 
   // clear out the old list
   ulEl.empty();
@@ -42,30 +32,69 @@ function updateBreweries(breweryData) {
   for (let i = 0; i < breweryData.length; i++) {
     // only show if brewery is open
     if (breweryData[i].brewery_type !== "closed") {
-      // set up HTML elements for list and link
+      satBtnEl = $("<button>");
+      phoneBtnEl = $("<button>");
+      urlBtnEl = $("<button>");
+
+      // set up line to hold brewery header and info
       lineEl = $("<li>");
-      linkEl = $("<a>");
-      // add a URL if it exists
+      // set up header
+      headerEl = $("<h5>")
+      headerEl.text(breweryData[i].name);
+      // set up paragraph element for all other data
+      pEl = $("<p>");
+      // brewery address text
+      breweryText = `${breweryData[i].street}, ${breweryData[i].city}, ${breweryData[i].state} `;
+      breweryText += `${breweryData[i].postal_code}  `;
+      pEl.text(breweryText);
+      // add a URL button if it exists
       if (!!breweryData[i].website_url) {
-        linkEl.attr("href", breweryData[i].website_url);
-        linkEl.attr("target", "_blank");
+        anchorEl = $("<a>");
+        anchorEl.attr("href",breweryData[i].website_url);
+        anchorEl.attr("target","_blank");
+        urlBtnEl.text("🌐");
+        urlBtnEl.attr("id", "urlBtn" + i);
+        anchorEl.append(urlBtnEl);
+        pEl.append(anchorEl);
       }
-      // format phone number
-      phoneNum = formatPhone(breweryData[i].phone);
-      // sets up brewery info into a string
-      breweryText = `${breweryData[i].name} - `;
-      breweryText += `${breweryData[i].street}, ${breweryData[i].city}, ${breweryData[i].state} `;
-      breweryText += `${breweryData[i].postal_code}`;
-      // add phone number if it exists
-      if (!!phoneNum) {
-        breweryText += ` - ${phoneNum}`;
+      // add phone number button if it exists
+      if (!!breweryData[i].phone) {
+        anchorEl = $("<a>");
+        anchorEl.attr("href","tel:" + breweryData[i].phone);
+        phoneBtnEl.text("📱");
+        phoneBtnEl.attr("id", "phoneBtn" + i);
+        anchorEl.append(phoneBtnEl);
+        pEl.append(anchorEl);
       }
-      // appends elements
-      linkEl.text(breweryText);
-      lineEl.append(linkEl);
+      // add update sat image button if coords exit
+      if (!!breweryData[i].longitude && !!breweryData[i].latitude) {
+        satBtnEl.text("🗺️")
+        satBtnEl.attr("id","satBtn" + i);
+        satBtnEl.attr("data-lon", breweryData[i].longitude);
+        satBtnEl.attr("data-lat", breweryData[i].latitude);
+        satBtnEl.attr("data-name", breweryData[i].name);
+        pEl.append(satBtnEl);  
+        satBtnEl.on("click", handleSatBtn)
+      }
+      // append header and paragraph to line
+      lineEl.append(headerEl);
+      lineEl.append(pEl);
+      // append line to unordered list element
       ulEl.append(lineEl);
     }
   }
+}
+
+/* === handleSatBtn ===
+Pulls the longitude and latitude data from button element when user clicks
+on the update Satellite button for a brewery and then updates the sat image.
+=== handleSatBtn ===*/
+function handleSatBtn(event) {
+  var btnEl = $(event.target);
+  var lon = btnEl.attr("data-lon");
+  var lat = btnEl.attr("data-lat");
+  var name = btnEl.attr("data-name");
+  getSatImageByCoord(lon, lat, name);
 }
 
 /* === updatePoem ===
@@ -172,14 +201,39 @@ async function getPoem() {
   updatePoem(poem, searchTerm);
 }
 
+/* === getSatImageByCoord ===
+Fetches the satellite image from NASA  from the parameters latitude and longitude.
+=== getSatImageByCoord ===*/
+function getSatImageByCoord(lon, lat, breweryName) {
+  var satelliteApi = `https://api.nasa.gov/planetary/earth/assets?lon=${lon}&lat=${lat}&date=2014-01-01&&dim=0.10&api_key=${apiKey}`;
+  var headerEl = $("#brewery-name");
+  var imageEl = $("#sat-image");
+  
+  headerEl.text(breweryName);
+  imageEl.attr("src", "");
+
+  // fetches the satellite image, once complete calls function to update html
+  fetch(satelliteApi)
+    .then(function (response) {
+      if (!response.ok) {
+        alert("Satellite data not found!");
+      }
+      return response.json();
+    })
+    .then(updateSatImage);
+}
+
 /* === getSatImage ===
-Fetches the satellite image from NASA for a brewery based on its latitude and longitude.
+Fetches the satellite image from NASA from the brewery data's latitude and longitude.
 === getSatImage ===*/
 function getSatImage(breweryData) {
-  var lon = breweryData[4].longitude;
-  var lat = breweryData[4].latitude;
+  //BUG FIX MISSING COORDS HERE!!!
+  var lon = breweryData[0].longitude;
+  var lat = breweryData[0].latitude;
   var satelliteApi = `https://api.nasa.gov/planetary/earth/assets?lon=${lon}&lat=${lat}&date=2014-01-01&&dim=0.10&api_key=${apiKey}`;
+  var headerEl = $("#brewery-name");
 
+  headerEl.text(breweryData[0].name);
   // function call to update the brewery list
   updateBreweries(breweryData);
   // fetches the satellite image, once complete calls function to update html
@@ -210,7 +264,7 @@ function getBreweryApi(cityName) {
 
   // replace spaces to set up for URL
   cityString = cityName.replace(" ", "_");
-  currentApi = `https://api.openbrewerydb.org/v1/breweries?by_city=${cityString}&per_page=10`;
+  currentApi = `https://api.openbrewerydb.org/v1/breweries?by_city=${cityString}&per_page=50`;
 
   fetch(currentApi)
     .then(function (response) {
