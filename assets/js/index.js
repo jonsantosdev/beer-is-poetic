@@ -44,7 +44,12 @@ function updateBreweries(breweryData) {
       // set up paragraph element for all other data
       pEl = $("<p>");
       // brewery address text
-      breweryText = `${breweryData[i].street}, ${breweryData[i].city}, ${breweryData[i].state} `;
+      if (!breweryData[i].street) {
+        breweryText = ""
+      } else {
+        breweryText = `${breweryData[i].street}, `;  
+      }
+      breweryText += `${breweryData[i].city}, ${breweryData[i].state} `;
       breweryText += `${breweryData[i].postal_code}  `;
       pEl.text(breweryText);
       // add a URL button if it exists
