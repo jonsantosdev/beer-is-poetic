@@ -207,8 +207,11 @@ Fetches the satellite image from NASA  from the parameters latitude and longitud
 function getSatImageByCoord(lon, lat, breweryName) {
   var satelliteApi = `https://api.nasa.gov/planetary/earth/assets?lon=${lon}&lat=${lat}&date=2014-01-01&&dim=0.10&api_key=${apiKey}`;
   var headerEl = $("#brewery-name");
-
+  var imageEl = $("#sat-image");
+  
   headerEl.text(breweryName);
+  imageEl.attr("src", "");
+
   // fetches the satellite image, once complete calls function to update html
   fetch(satelliteApi)
     .then(function (response) {
@@ -224,6 +227,7 @@ function getSatImageByCoord(lon, lat, breweryName) {
 Fetches the satellite image from NASA from the brewery data's latitude and longitude.
 === getSatImage ===*/
 function getSatImage(breweryData) {
+  //BUG FIX MISSING COORDS HERE!!!
   var lon = breweryData[0].longitude;
   var lat = breweryData[0].latitude;
   var satelliteApi = `https://api.nasa.gov/planetary/earth/assets?lon=${lon}&lat=${lat}&date=2014-01-01&&dim=0.10&api_key=${apiKey}`;
