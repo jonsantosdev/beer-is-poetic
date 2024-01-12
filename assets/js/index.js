@@ -8,7 +8,7 @@ Adds satellite image URL to image source
 === updateSatImage ===*/
 function updateSatImage(satData) {
   var imageEl = $("#sat-image");
-  
+
   imageEl.attr("src", satData.url);
 }
 
@@ -45,14 +45,19 @@ function updateBreweries(breweryData) {
       // set up paragraph element for all other data
       pEl = $("<p>");
       // brewery address text
-      breweryText = `${breweryData[i].street}, ${breweryData[i].city}, ${breweryData[i].state} `;
+      if (!breweryData[i].street) {
+        breweryText = ""
+      } else {
+        breweryText = `${breweryData[i].street}, `;  
+      }
+      breweryText += `${breweryData[i].city}, ${breweryData[i].state} `;
       breweryText += `${breweryData[i].postal_code}  `;
       pEl.text(breweryText);
       // add a URL button if it exists
       if (!!breweryData[i].website_url) {
         anchorEl = $("<a>");
-        anchorEl.attr("href",breweryData[i].website_url);
-        anchorEl.attr("target","_blank");
+        anchorEl.attr("href", breweryData[i].website_url);
+        anchorEl.attr("target", "_blank");
         urlBtnEl.text("🌐");
         urlBtnEl.attr("id", "urlBtn" + i);
         anchorEl.append(urlBtnEl);
@@ -61,7 +66,7 @@ function updateBreweries(breweryData) {
       // add phone number button if it exists
       if (!!breweryData[i].phone) {
         anchorEl = $("<a>");
-        anchorEl.attr("href","tel:" + breweryData[i].phone);
+        anchorEl.attr("href", "tel:" + breweryData[i].phone);
         phoneBtnEl.text("📱");
         phoneBtnEl.attr("id", "phoneBtn" + i);
         anchorEl.append(phoneBtnEl);
@@ -70,11 +75,11 @@ function updateBreweries(breweryData) {
       // add update sat image button if coords exit
       if (!!breweryData[i].longitude && !!breweryData[i].latitude) {
         satBtnEl.text("🗺️")
-        satBtnEl.attr("id","satBtn" + i);
+        satBtnEl.attr("id", "satBtn" + i);
         satBtnEl.attr("data-lon", breweryData[i].longitude);
         satBtnEl.attr("data-lat", breweryData[i].latitude);
         satBtnEl.attr("data-name", breweryData[i].name);
-        pEl.append(satBtnEl);  
+        pEl.append(satBtnEl);
         satBtnEl.on("click", handleSatBtn)
       }
       // append header and paragraph to line
@@ -188,7 +193,7 @@ async function getPoem() {
   num = Math.random();
   if (num < 0.25) {
     searchTerm = " ale";
-  } else if (num  < 0.5) {
+  } else if (num < 0.5) {
     searchTerm = "beer";
   } else if (num < .75) {
     searchTerm = "saloon";
@@ -209,7 +214,7 @@ function getSatImageByCoord(lon, lat, breweryName) {
   var satelliteApi = `https://api.nasa.gov/planetary/earth/assets?lon=${lon}&lat=${lat}&date=2014-01-01&&dim=0.10&api_key=${apiKey}`;
   var headerEl = $("#brewery-name");
   var imageEl = $("#sat-image");
-  
+
   headerEl.text(breweryName);
   imageEl.attr("src", "");
 
@@ -228,24 +233,35 @@ function getSatImageByCoord(lon, lat, breweryName) {
 Fetches the satellite image from NASA from the brewery data's latitude and longitude.
 === getSatImage ===*/
 function getSatImage(breweryData) {
-  //BUG FIX MISSING COORDS HERE!!!
-  var lon = breweryData[0].longitude;
-  var lat = breweryData[0].latitude;
-  var satelliteApi = `https://api.nasa.gov/planetary/earth/assets?lon=${lon}&lat=${lat}&date=2014-01-01&&dim=0.10&api_key=${apiKey}`;
+  var lon;
+  var lat;
+  var satelliteApi;
   var headerEl = $("#brewery-name");
+
+  // Runs through the brewery data until the proper longitude and latitude data are found.
+  for (let i = 0; i < breweryData.length; i++) {
+    if (breweryData[i].longitude && breweryData[i].latitude) {
+      lon = breweryData[i].longitude;
+      lat = breweryData[i].latitude;
+      break;
+    }
+  }
 
   headerEl.text(breweryData[0].name);
   // function call to update the brewery list
   updateBreweries(breweryData);
   // fetches the satellite image, once complete calls function to update html
-  fetch(satelliteApi)
-    .then(function (response) {
-      if (!response.ok) {
-        alert("Satellite data not found!");
-      }
-      return response.json();
-    })
-    .then(updateSatImage);
+  if (!!lon && !!lat) {
+    satelliteApi = `https://api.nasa.gov/planetary/earth/assets?lon=${lon}&lat=${lat}&date=2014-01-01&&dim=0.10&api_key=${apiKey}`;
+    fetch(satelliteApi)
+      .then(function (response) {
+        if (!response.ok) {
+          alert("Satellite data not found!");
+        }
+        return response.json();
+      })
+      .then(updateSatImage);
+  }
 }
 
 /* === getBreweryApi ===
@@ -286,17 +302,17 @@ function handleSearch(event) {
   // checking for the key input with ASCII code for "enter"
   if (event.which === 13) {
     localStorage.setItem("breweryLocation", cityName);
-    getBreweryApi(cityName);  
+    getBreweryApi(cityName);
   }
 }
 
 /* === handleBtnClick ===
 Handles the search request when the search button is clicked
 === handleBtnClick ===*/
-function handleBtnClick () {
+function handleBtnClick() {
   var cityName = $("#location-input").val();
   localStorage.setItem("breweryLocation", cityName);
-  getBreweryApi(cityName);  
+  getBreweryApi(cityName);
 }
 
 /* === MAIN ===
