@@ -40,6 +40,7 @@ function updateBreweries(breweryData) {
       lineEl = $("<li>");
       // set up header
       headerEl = $("<h5>")
+      headerEl.addClass("font-bold text-lg italic text-yellow-600");
       headerEl.text(breweryData[i].name);
       // set up paragraph element for all other data
       pEl = $("<p>");
