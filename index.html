@@ -11,7 +11,7 @@
  bg-yellow-600,  -->
 <body class="h-[90vh] m-0 p-0 bg-amber-300">
     <!-- Header Section -->
-    <header class="bg-yellow-600 w-full p-2.5 text-center h-20 font-serif font-bold text-6xl text-yellow-950">
+    <header class="bg-yellow-600 w-full p-2.5 text-center text-6xl h-20 font-serif font-bold text-yellow-950">
         Beer is Poetic
     </header>
 
@@ -20,11 +20,11 @@
         <!-- Left Container -->
         <div id="leftContainer" class="flex flex-col h-full" style="flex: 65%;">
 
-            <section id="searchBrew" class="bg-amber-100 rounded-md border pl-2.5 pt-5  m-2.5 text-yellow-800" style="flex: 20%; box-shadow: 5px 5px 2px 2px #e7b718;">
+            <section id="searchBrew" class="bg-amber-100 rounded-3xl border pl-2.5 pt-5  m-2.5 text-yellow-800" style="flex: 20%; box-shadow: 5px 5px 4px 4px #e7b718;">
                 <input id="location-input" type="text" placeholder="Hilo"/>
                 <button id="location-btn">Search</button>
             </section>
-            <section id="resultBrew" class="bg-amber-100  rounded-3xl  m-2.5 pl-2.5 pt-10  flex-1 text-yellow-800" style="flex: 80%; box-shadow: 5px 5px 2px 2px #e7b718;">
+            <section id="resultBrew" class="bg-amber-100  rounded-3xl  m-2.5 pl-2.5 pt-10  flex-1 text-yellow-800" style="flex: 80%; box-shadow: 5px 5px 4px 4px #e7b718;">
                 <ul id="brewery-list"></ul>
             </section>
 
@@ -33,14 +33,14 @@
         <!-- Right Container -->
         <div id="rightContainer" class="flex flex-col h-full" style="flex: 35%;">
 
-            <section id="poem-snippet" class="bg-yellow-800 rounded-3xl  m-2.5 p-2.5 flex-1 text-amber-600" style="flex: 50%; box-shadow: 5px 5px 2px 2px #ab8403;">
+            <section id="poem-snippet" class="bg-yellow-800 rounded-3xl  m-2.5 p-2.5 flex-1 text-amber-500" style="flex: 50%; box-shadow: 5px 5px 4px 4px #ab8403;">
                 
             </section>
 
-            <section id="satBrew" class="bg-yellow-800 rounded-md  m-2.5 p-2.5 flex-1" style="flex: 50%; box-shadow: 5px 5px 2px 2px #ab8403;">
+            <section id="satBrew" class="bg-yellow-800 rounded-3xl  m-2.5 p-2.5 flex-1" style="flex: 50%; box-shadow: 5px 5px 4px 4px #ab8403;">
                 <h3 id="brewery-name"></h3>
                 <div class="flex justify-center">
-                    <image id="sat-image" width="300" height="300" alt="satellite image of brewery location" src=""></image>
+                    <image id="sat-image" class="rounded-lg" width="300" height="300" alt="satellite image of brewery location" src=""></image>
                 </div>
             </section>
 
