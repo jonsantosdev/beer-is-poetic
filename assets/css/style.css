@@ -9,6 +9,18 @@ h3 {
     color:#ebbe27;
 }
 
+h5 {
+    font-size: 18px !important;
+    font-style: italic;
+    color:#a8861a;
+}
+
+p {
+    font-size: 15px !important;
+    margin-bottom: 5px !important;
+    margin-left: 10px !important;
+}
+
 html {
     height: 90%; /* Ensure the HTML and body take the full viewport height */
     margin: 0; /* Remove default margin */
