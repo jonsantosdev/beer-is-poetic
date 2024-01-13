@@ -38,12 +38,14 @@ function updateBreweries(breweryData) {
 
       // set up line to hold brewery header and info
       lineEl = $("<li>");
+      lineEl.addClass("mb-2.5");
       // set up header
       headerEl = $("<h5>")
       headerEl.addClass("font-bold text-lg italic text-yellow-600");
       headerEl.text(breweryData[i].name);
       // set up paragraph element for all other data
       pEl = $("<p>");
+      pEl.addClass("text-sm mb-1 ml-2.5");
       // brewery address text
       if (!breweryData[i].street) {
         breweryText = ""
@@ -174,7 +176,8 @@ function updatePoem(poemData, searchTerm) {
   }
   // add the author
   pEl = $("<p>");
-  pEl.attr("id", "author");
+  pEl.addClass("text-xl text-amber-300")
+  // pEl.attr("id", "author");
   pEl.text(`--${author}`);
   poemEl.append(pEl);
 }
