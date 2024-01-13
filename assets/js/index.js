@@ -225,7 +225,11 @@ function getSatImageByCoord(lon, lat, breweryName) {
   fetch(satelliteApi)
     .then(function (response) {
       if (!response.ok) {
-        alert("Satellite data not found!");
+        var errorDialogEl = $("#error-dialog");
+        var errorMsgEl = $("#error-message");
+        errorMsgEl.text("Satellite data not found!")
+        errorDialogEl.attr("title", "Oops!")
+        errorDialogEl.dialog();
       }
       return response.json();
     })
@@ -249,7 +253,7 @@ function getSatImage(breweryData) {
       break;
     }
   }
-
+  // Brewery name for header text
   headerEl.text(breweryData[0].name);
   // function call to update the brewery list
   updateBreweries(breweryData);
@@ -259,7 +263,11 @@ function getSatImage(breweryData) {
     fetch(satelliteApi)
       .then(function (response) {
         if (!response.ok) {
-          alert("Satellite data not found!");
+          var errorDialogEl = $("#error-dialog");
+          var errorMsgEl = $("#error-message");
+          errorMsgEl.text("Satellite data not found!")
+          errorDialogEl.attr("title", "Oops!")
+          errorDialogEl.dialog();
         }
         return response.json();
       })
@@ -289,7 +297,11 @@ function getBreweryApi(cityName) {
   fetch(currentApi)
     .then(function (response) {
       if (!response.ok) {
-        alert("Brewery data not found!");
+        var errorDialogEl = $("#error-dialog");
+        var errorMsgEl = $("#error-message");
+        errorMsgEl.text("Brewery data not found!")
+        errorDialogEl.attr("title", "Oops!")
+        errorDialogEl.dialog();
       }
       return response.json();
     })
