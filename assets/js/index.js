@@ -26,9 +26,6 @@ function updateBreweries(breweryData) {
   var urlBtnEl;     // brewery website button
   var anchorEl;     // anchor element used for URL and phone
 
-  // clear out the old list
-  ulEl.empty();
-  // fill in with the new
   for (let i = 0; i < breweryData.length; i++) {
     // only show if brewery is open
     if (breweryData[i].brewery_type !== "closed") {
@@ -166,6 +163,7 @@ function updatePoem(poemData, searchTerm) {
 
   // add the title
   pEl = $("<h3>");
+  pEl.addClass("text-2xl font-bold italic mb-1 text-amber-300");
   pEl.text(`${title}`);
   poemEl.append(pEl);
   // add the poetry lines to the poem element
@@ -219,6 +217,7 @@ function getSatImageByCoord(lon, lat, breweryName) {
   var imageEl = $("#sat-image");
 
   headerEl.text(breweryName);
+  headerEl.addClass("text-2xl font-bold italic mb-2 text-amber-300");
   imageEl.attr("src", "");
 
   // fetches the satellite image, once complete calls function to update html
@@ -255,6 +254,7 @@ function getSatImage(breweryData) {
   }
   // Brewery name for header text
   headerEl.text(breweryData[0].name);
+  headerEl.addClass("text-2xl font-bold italic mb-2 text-amber-300");
   // function call to update the brewery list
   updateBreweries(breweryData);
   // fetches the satellite image, once complete calls function to update html
@@ -281,6 +281,15 @@ Fetches the data for a city based on its name.
 function getBreweryApi(cityName) {
   var cityString;
   var currentApi;
+  var headerEl;
+  var ulEl = $("#brewery-list");  // unordered list used to list brewery info
+
+  // clear the brewery list and add a header
+  ulEl.empty();
+  headerEl = $("<h2>");
+  headerEl.addClass("text-3xl font-bold italic mb-2 text-amber-600")
+  headerEl.text(cityName);
+  ulEl.append(headerEl);
 
   // if the cityName is undefined, use the default
   if (!cityName) {
@@ -334,7 +343,7 @@ function handleBtnClick() {
 Sets up the search button listener
 === MAIN ===*/
 var cityName = localStorage.getItem("breweryLocation");
-if (!!cityName) {
+if (cityName) {
   getBreweryApi(cityName);
 }
 inputText.keypress(handleSearch);
