@@ -1,6 +1,4 @@
 
-/* apparently, styles in html tag is not stardard practice, so added body class in html
-and html class here */
 h3 {
     font-size: 24px !important;
     font-style: italic;
@@ -9,79 +7,44 @@ h3 {
     color:#ebbe27;
 }
 
-h5 {
-    /* font-size: 18px !important; */
-    /* font-style: italic; */
-    /* color:rgb(168, 134, 26); */
-    
-}
-
-p {
+/*moved these below to javascript using tailwind classes instead.*/
+/* p {
     font-size: 15px !important;
     margin-bottom: 5px !important;
     margin-left: 10px !important;
-}
+} */
 
-li {
+/* li {
     margin-bottom: 10px !important;
-}
-
+} */
+/* 
 #author {
     font-size: 20px !important;
     color: #ebbe27;
-}
+} */
 
+/* styles in html tag is not stardard practice in tailwind, so added body class in html
+and html class here */
 html {
     height: 90%; /* Ensure the HTML and body take the full viewport height */
     margin: 0; /* Remove default margin */
     padding: 0; /* Remove default padding */
 }
 
-
-/* Previous class substituted by tailwind classes. If h-20 used doesn't work
-could use an inline style "height: 80px" if need exactly that as tailwind doesn't
-have a utility class for pixel height.
-     .headerBox {
-    width: 100%;
-    border: 1px solid black;
-    padding: 10px;
-    text-align: center;
-    /* Adjust the height of the header as needed 
-    height: 80px; /* Example height 
-} 
-*/
-
-/* this can't be done easily in tailwind, so added flex class in main html and height here. 
-I think we could use h-screen but I tried and it needs adjusting (padding and margin?) */
+/* below classes using percentages which tailwind doesn't have so left here. */
 main {
     height: calc(100% - 20px); /* Subtract the height of the header from the viewport height */
 }
-
-/* these two classes are replaced with tailwind utilities in html. I think you are able
-to change the flex: 20%, etc inline styles in html with tailwind utilities by using flex-grow
-but needs more testing to do so could use custom utility, but unsure how*/
-/* #leftContainer, #rightContainer {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-} */
-
-/* .borderBox {
-    border: 1px solid black;
-    margin: 10px;
-    padding: 10px;
-    box-sizing: border-box;
-} */
 
 #searchBrew {
     flex: 0 0 40%; /* % of the parent container's height */
 }
 
-/* using flex-1 in thes ids */
-/* #resultBrew {
-    flex: 1; /* Takes the remaining space 
+/* Box shadow's offsets are not straightforward in tailwind, including css here/not html*/
+.boxShadowR {
+    box-shadow: 5px 5px 4px 4px #ab8403;
 }
 
-#poemBrew, #satBrew {
-    flex: 1; /* Each takes 50% of the parent container's height 
-} */
+.boxShadowL {
+    box-shadow: 5px 5px 4px 4px #e7b718
+}
