@@ -31,7 +31,11 @@ N/A
 
 ## Credits
 
-@kevinchogan, @TreyLathe, @waltermatulich, @jonsantosdev, @codentell
+@kevinchogan, @TreyLathe, @waltermatulich, @jonsantosdev,
+
+## Assistance
+Drew Hoang @codentell 
+Kyle Vance
 
 ## License
 
@@ -39,10 +43,13 @@ Please refer to the LICENSE in the repo.
 
 ## Repository
 
+https://github.com/jonsantosdev/beer-is-poetic
 
+## Website
+
+https://jonsantosdev.github.io/beer-is-poetic/
 
 ## Future feature development
-https://github.com/jonsantosdev/beer-is-poetic
 
 Maps
     Use a more performant map
