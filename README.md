@@ -3,18 +3,24 @@ Beer is Poetic
 
 ## Description
 
-This website allows you to search for a brewery when you enter a city name and will generate a satellite image of the city as well as a random poem that has the word "beer" in it and credits the author.
+This website allows you to search for a brewery when you enter a city name and will generate a satellite image of the city as well as a random poem that has the word "beer", "ale", "saloon", and "tavern" in it and credits the author.
 
 3 APIs were called:
     List of breweries by city
+    https://api.openbrewerydb.org
+
     Satellite image of city
+    https://api.nasa.gov/
+
     Random poems
+    https://poetrydb.org/
 
 Built on: 
     HTML 
     CSS 
     JS
-Tailwinds for bootstrap
+Tailwinds for CSS library
+    For the purposes of this project we were required to use the CDN interface (not recommended by Tailwind for live sites, just testing) and will use installation in future.
 jQuery and jQueryUI
 
 
@@ -25,14 +31,18 @@ N/A
 
 ## Credits
 
-@kevinchogan, @TreyLathe, @waltermatulich, @jonsantosdev
+@kevinchogan, @TreyLathe, @waltermatulich, @jonsantosdev, @codentell
 
 ## License
 
 Please refer to the LICENSE in the repo.
 
+## Repository
 
-## Features
+
+
+## Future feature development
+https://github.com/jonsantosdev/beer-is-poetic
 
 Maps
     Use a more performant map
@@ -42,5 +52,7 @@ Directions
     Use map API to provide directions to the brewery
 Wineries
     Not limiting to beer lovers
+Distilleries
+    For whiskey, bourbon, and vodka lovers    
 Nearby
-    Include breweries that are within a radius
+    Include breweries, wineries, and distilleries that are within a radius
