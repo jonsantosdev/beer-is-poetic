@@ -1,45 +1,8 @@
-::placeholder {
-    color: #d5ac22 !important;
-    font-style: italic;
-}
 
-/* h3 {
-    font-size: 24px !important;
-    font-style: italic;
-    font-weight: bold !important;
-    margin-bottom: 10px !important;
-    color:#ebbe27;
-} */
-
-/*moved these below to javascript using tailwind classes instead.*/
-/* p {
-
-    font-size: 15px !important;
-    margin-bottom: 5px !important;
-    margin-left: 10px !important;
-} */
-
-/* li {
-    margin-bottom: 10px !important;
-} */
-/* 
-#author {
-    font-size: 20px !important;
-    color: #ebbe27;
-} */
-
-/* styles in html tag is not stardard practice in tailwind, so added body class in html
-and html class here */
-html {
-    height: 90%; /* Ensure the HTML and body take the full viewport height */
-    margin: 0; /* Remove default margin */
-    padding: 0; /* Remove default padding */
-}
-
-/* below classes using percentages which tailwind doesn't have so left here. */
+/* below classes using percentages which tailwind doesn't have so left here. */ */
 main {
-    height: calc(100% - 20px); /* Subtract the height of the header from the viewport height */
-}
+    height: calc(100% - 20px); /*simplest way to require height*/
+ }
 
 #searchBrew {
     flex: 0 0 40%; /* % of the parent container's height */
